@@ -1,4 +1,4 @@
-package com.example.autokolcsonzo;
+package com.example.autokereskedes;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,8 +11,12 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("autokereskedes-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(fxmlLoader.load());
+        MainController controller=fxmlLoader.getController();
+        controller.initalize();
+        //teljes képernyős window
+        stage.setMaximized(true);
+        stage.setTitle("Kókány autókereskedés bt.");
         stage.setScene(scene);
         stage.show();
     }

@@ -1,8 +1,8 @@
-module com.example.autokolcsonzo {
+module com.example.autokereskedes {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.example.autokolcsonzo to javafx.fxml;
-    exports com.example.autokolcsonzo;
+    opens com.example.autokereskedes to javafx.fxml;
+    exports com.example.autokereskedes;
 }
