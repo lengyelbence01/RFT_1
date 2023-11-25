@@ -1,5 +1,7 @@
 package com.example.autokereskedes;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import java.sql.*;
 
 public class MainController {
     public Pane pane1;
@@ -22,23 +25,19 @@ public class MainController {
     public ImageView imgShowedOnScreen;
 
 
+
     //Main-nek való átadáshoz
     public void initalize(){
         img1.setOnMouseMoved(this::showImageOnScreen);
-        pane1.setOnMouseClicked(this::disAppearImage);
-
+        img1.setOnMouseExited(this::disAppearImage);
     }
 
-    public void TextBuilder(){
-
-    }
-
+    //public AutoAdatKezelo
 
     //Mouse moved - a kurzor képre vitel esetén megjelenik a kép nyagyított változat, kép nézegetőhöz
     public void showImageOnScreen(MouseEvent mouseEvent){
         imgShowedOnScreen.setVisible(true);
-        imgShowedOnScreen.setImage(img1.getImage());
-
+        //imgShowedOnScreen.setImage(img1.getImage());
     }
 
     //Mouse clicked - kattintás esetén az eddig kinagyított kép eltűnik, illetve az értékét is visszaállítja null-ra
