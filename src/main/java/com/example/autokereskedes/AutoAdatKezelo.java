@@ -1,20 +1,75 @@
 package com.example.autokereskedes;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import javafx.scene.image.Image;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class AutoAdatKezelo {
-        public ArrayList<Auto> osszesAuto=new ArrayList<>();
-        public ArrayList<String[]> sorokAdatai=new ArrayList<>();
-        public String filename;
-        public Auto kivalasztottAuto;
+    public ArrayList<Auto> osszesAuto=new ArrayList<>();
+    public ArrayList<String[]> sorokAdatai=new ArrayList<>();
+    public String filename;
+    public Auto kivalasztottAuto;
+
+
+
+
+    //Autó keresés ID alapján
+    public Auto getAutoByID(String autoID){
+        System.out.println("Searching for auto with ID: "+autoID);
+        for(int i = 0; i<osszesAuto.size(); i++){
+            if(autoID.equals(osszesAuto.get(i).auto_id.toString())){
+                return osszesAuto.get(i);
+            }
+        }
+        System.out.println("userDatabaseHandler.getUserByUID() ERROR! No User found");
+        return osszesAuto.get(0);
+    }
+
+
+    //autók számának lekérdezése
+    public int getAutokSzama(){
+        return (osszesAuto.size());
+    }
+
+    //új autó hozzáadása
+    public void addAuto(String marka,String modell, String evjarat, String ar,String kep_link){
+        int nextIndex=osszesAuto.size()+1;
+        Auto newAuto=new Auto(nextIndex,marka,modell,Integer.parseInt(evjarat),Integer.parseInt(ar),kep_link);
+        osszesAuto.add(newAuto);
+
+        //új autó hozzáadása a CSV file-hoz
+        try{
+            FileWriter fw  = new FileWriter(filename, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            //Minden mező kitöltésének ellenőrzése
+            if(marka.equals("") || modell.equals("") || evjarat.equals("") || ar.equals("")) {
+                //Ha az egyik mező üres, Exception dobás
+                System.out.println("Error: Fill all fields");
+                pw.flush();
+                pw.close();
+                return;
+            }else{
+                //Ha ki vannak töltve a mezők
+                pw.println(nextIndex + "," + modell + "," + marka + "," + evjarat + "," + ar);
+                pw.flush();
+                pw.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
         //CONSTRUKTOR
-
     public AutoAdatKezelo(){
-        filename="./autok.csv";
+        filename="src/main/resources/autok.csv";
         File file=new File(filename);
 
         try {
@@ -29,13 +84,14 @@ public class AutoAdatKezelo {
                 sorokAdatai.add(values); //adds the line to an arraylist (dataRows)
             }
             inputStream.close();
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
-        //Creation of each User
+        //Autó példányok kiválasztása - létrehozása
         for(int i=0; i<sorokAdatai.size();i++){
             Auto tempAuto = new Auto (Integer.parseInt(sorokAdatai.get(i)[0]),sorokAdatai.get(i)[1],sorokAdatai.get(i)[2],
-                    Integer.parseInt(sorokAdatai.get(i)[3]),Integer.parseInt(sorokAdatai.get(i)[4]));
+                    Integer.parseInt(sorokAdatai.get(i)[3]),Integer.parseInt(sorokAdatai.get(i)[4]),
+                    sorokAdatai.get(i)[5]);
             //add each tweet to the allTweets array
             osszesAuto.add(tempAuto);
         }
