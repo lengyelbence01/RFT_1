@@ -6,34 +6,5 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.autokereskedes.MainController">
       <ImageView fx:id="imgShowedOnScreen" fitHeight="374.0" fitWidth="482.0" layoutX="390.0" layoutY="313.0" onMouseClicked="#disAppearImage" pickOnBounds="true" preserveRatio="true" />
-      <Pane layoutX="60.0" layoutY="43.0" prefHeight="240.0" prefWidth="200">
-         <children>
-            <ImageView fx:id="img1" fitHeight="133.0" fitWidth="200.0" onMouseExited="#disAppearImage" onMouseMoved="#showImageOnScreen" pickOnBounds="true" preserveRatio="true">
 
-            </ImageView>
-            <Button fx:id="sell1" layoutX="113.0" layoutY="201.0" mnemonicParsing="false" text="Értékesítve" />
-            <Button fx:id="lerazas1" layoutX="14.0" layoutY="201.0" mnemonicParsing="false" text="Leárazás" />
-         <Label fx:id="label1" layoutX="-1.0" layoutY="134.0" prefHeight="66.0" prefWidth="200.0" />
-         </children>
-      </Pane>
-
-    <Pane layoutX="300.0" layoutY="43.0" prefHeight="240.0" prefWidth="200">
-        <children>
-            <ImageView fx:id="img2" fitHeight="133.0" fitWidth="200.0" onMouseExited="#disAppearImage" onMouseMoved="#showImageOnScreen" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <Button fx:id="sell2" layoutX="113.0" layoutY="201.0" mnemonicParsing="false" text="Értékesítve" />
-            <Button fx:id="lerazas2" layoutX="14.0" layoutY="201.0" mnemonicParsing="false" text="Leárazás" />
-            <Label fx:id="label2" layoutX="-1.0" layoutY="134.0" prefHeight="66.0" prefWidth="200.0" />
-        </children>
-    </Pane>
-    <Pane layoutX="540" layoutY="43.0" prefHeight="240.0" prefWidth="200">
-        <children>
-            <ImageView fx:id="img3" fitHeight="133.0" fitWidth="200.0" onMouseExited="#disAppearImage" onMouseMoved="#showImageOnScreen" pickOnBounds="true" preserveRatio="true">
-
-            </ImageView>
-            <Button fx:id="sell3" layoutX="113.0" layoutY="201.0" mnemonicParsing="false" text="Értékesítve" />
-            <Button fx:id="lerazas3" layoutX="14.0" layoutY="201.0" mnemonicParsing="false" text="Leárazás" />
-            <Label fx:id="label3" layoutX="-1.0" layoutY="134.0" prefHeight="66.0" prefWidth="200.0" />
-        </children>
-    </Pane>
 </AnchorPane>

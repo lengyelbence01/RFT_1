@@ -14,6 +14,7 @@ public class AutoAdatKezelo {
     public ArrayList<Auto> osszesAuto=new ArrayList<>();
     public ArrayList<String[]> sorokAdatai=new ArrayList<>();
     public String filename;
+    public Integer nextIndex=0;
     public Auto kivalasztottAuto;
 
 
@@ -39,7 +40,7 @@ public class AutoAdatKezelo {
 
     //új autó hozzáadása
     public void addAuto(String marka,String modell, String evjarat, String ar,String kep_link){
-        int nextIndex=osszesAuto.size()+1;
+        nextIndex++;
         Auto newAuto=new Auto(nextIndex,marka,modell,Integer.parseInt(evjarat),Integer.parseInt(ar),kep_link);
         osszesAuto.add(newAuto);
 

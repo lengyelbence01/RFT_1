@@ -39,44 +39,86 @@ public class MainController {
     public Button sell3;
     public Button lerazas3;
     public Label label3;
+    public static int ID=0;
 
+    AutoAdatKezelo autoAdatKezelo = new AutoAdatKezelo();
+    List<Auto> osszesAuto = autoAdatKezelo.osszesAuto;
 
     //Main-nek való átadáshoz
     public void initalize() throws FileNotFoundException {
-        img1.setOnMouseMoved(this::showImageOnScreen);
-        img1.setOnMouseExited(this::disAppearImage);
         autoKezelo();
+        //addAutotoAutoker();
     }
 
+
+    //Új Pane beszúrása az AnchorPanebe
     public void autoKezelo(){
+        for(int i=0;i<osszesAuto.size();i++){
+            Pane pane=createPane(i);
+            anchorPane.getChildren().add(pane);
 
-        AutoAdatKezelo autoAdatKezelo = new AutoAdatKezelo();
-        List<Auto> osszesAuto = autoAdatKezelo.osszesAuto;
+        }
+    }
 
+    //Új Pane létrehozása megjelenítéshez
+    public Pane createPane(int index) {
+        Pane pane = new Pane();
+        pane.setPrefHeight(240);
+        pane.setPrefWidth(200);
+        if (index == 0) {
+            pane.setLayoutX(60); // Az első Pane 60 pixelre legyen a képernyőtől jobbra
+        } else if (index == 1) {
+            pane.setLayoutX(60 + 2 * 220); // Az eltolás beállítása a jobbra toláshoz
+        } else {
+            pane.setLayoutX(60 + (index - 1) * 220); // Az eltolás beállítása a jobbra toláshoz
+        }
 
-        File file = new File(osszesAuto.get(0).kep_link);
+        //ImageView létrehozása - image hozzáadás
+        ImageView imageView = new ImageView();
+        imageView.setId("img"+index);
+        imageView.setFitHeight(133);
+        imageView.setFitWidth(200);
+        imageView.setOnMouseMoved(this::showImageOnScreen);
+        imageView.setOnMouseExited(this::disAppearImage);
+        File file = new File(osszesAuto.get(index).kep_link);
         Image image = new Image(file.toURI().toString());
-        img1.setImage(image);
+        imageView.setImage(image);
+        pane.getChildren().add(imageView);
 
-        label1.setText(osszesAuto.get(0).marka + " " + osszesAuto.get(0).modell +
-                " (" + osszesAuto.get(0).evjarat + ")\n" +
-                osszesAuto.get(0).ar + " Ft");
+        //Értékesítve gomb és id létrehozása
+        Button sellButton = new Button("Értékesítve");
+        sellButton.setLayoutX(113);
+        sellButton.setLayoutY(201);
+        // Egyedi fx:id beállítása
+        sellButton.setId("sell" + index);
+        pane.getChildren().add(sellButton);
 
-        file = new File(osszesAuto.get(1).kep_link);
-        image = new Image(file.toURI().toString());
-        img2.setImage(image);
+        //Leárazás gomb létrehozása - id beállítása
+        Button lerazasButton = new Button("Leárazás");
+        lerazasButton.setLayoutX(14);
+        lerazasButton.setLayoutY(201);
+        //
+        lerazasButton.setId("lerazas" + index);
+        pane.getChildren().add(lerazasButton);
 
-        label2.setText(osszesAuto.get(1).marka + " " + osszesAuto.get(1).modell +
-                " (" + osszesAuto.get(1).evjarat + ")\n" +
-                osszesAuto.get(1).ar + " Ft");
 
-        file = new File(osszesAuto.get(2).kep_link);
-        image = new Image(file.toURI().toString());
-        img3.setImage(image);
+        //Label létrehozása
+        Label label = new Label();
+        // Egyedi fx:id beállítása
+        label.setId("label"+index);
 
-        label3.setText(osszesAuto.get(2).marka + " " + osszesAuto.get(2).modell +
-                " (" + osszesAuto.get(2).evjarat + ")\n" +
-                osszesAuto.get(2).ar + " Ft");
+        label.prefWidth(200);
+        label.prefHeight(66);
+        label.setLayoutX(-1);
+        label.setLayoutY(134);
+        // - Szöveg hozzáadása a labelhez
+        label.setText(osszesAuto.get(index).marka + " " + osszesAuto.get(index).modell +
+                " (" + osszesAuto.get(index).evjarat + ")\n" +
+                osszesAuto.get(index).ar + " Ft");
+        pane.getChildren().add(label);
+
+        //Visszatérési érték
+        return pane;
     }
 
 
