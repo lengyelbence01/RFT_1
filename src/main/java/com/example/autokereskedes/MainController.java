@@ -2,6 +2,7 @@ package com.example.autokereskedes;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -40,14 +41,16 @@ public class MainController {
     public Button lerazas3;
     public Label label3;
     public static int ID=0;
+    public Button addCartoShopBTN;
 
     AutoAdatKezelo autoAdatKezelo = new AutoAdatKezelo();
     List<Auto> osszesAuto = autoAdatKezelo.osszesAuto;
 
     //Main-nek való átadáshoz
-    public void initalize() throws FileNotFoundException {
+    public void initalize(){
+
         autoKezelo();
-        //addAutotoAutoker();
+        addCartoShopBTN.setOnAction(this::addNewCartoShop);
     }
 
 
@@ -56,7 +59,6 @@ public class MainController {
         for(int i=0;i<osszesAuto.size();i++){
             Pane pane=createPane(i);
             anchorPane.getChildren().add(pane);
-
         }
     }
 
@@ -67,10 +69,8 @@ public class MainController {
         pane.setPrefWidth(200);
         if (index == 0) {
             pane.setLayoutX(60); // Az első Pane 60 pixelre legyen a képernyőtől jobbra
-        } else if (index == 1) {
-            pane.setLayoutX(60 + 2 * 220); // Az eltolás beállítása a jobbra toláshoz
-        } else {
-            pane.setLayoutX(60 + (index - 1) * 220); // Az eltolás beállítása a jobbra toláshoz
+        }else {
+            pane.setLayoutX(60 + index * 220); // Az eltolás beállítása a jobbra toláshoz
         }
 
         //ImageView létrehozása - image hozzáadás
@@ -78,11 +78,16 @@ public class MainController {
         imageView.setId("img"+index);
         imageView.setFitHeight(133);
         imageView.setFitWidth(200);
-        imageView.setOnMouseMoved(this::showImageOnScreen);
-        imageView.setOnMouseExited(this::disAppearImage);
+
+
         File file = new File(osszesAuto.get(index).kep_link);
         Image image = new Image(file.toURI().toString());
         imageView.setImage(image);
+
+
+        imageView.setOnMouseMoved(this::showImageOnScreen);
+        imageView.setOnMouseExited(this::disAppearImage);
+
         pane.getChildren().add(imageView);
 
         //Értékesítve gomb és id létrehozása
@@ -124,8 +129,9 @@ public class MainController {
 
     //Mouse moved - a kurzor képre vitel esetén megjelenik a kép nyagyított változat, kép nézegetőhöz
     public void showImageOnScreen(MouseEvent mouseEvent){
+        ImageView sourceImageView = (ImageView) mouseEvent.getSource();
+        imgShowedOnScreen.setImage(sourceImageView.getImage());
         imgShowedOnScreen.setVisible(true);
-        //imgShowedOnScreen.setImage(img1.getImage());
     }
 
     //Mouse clicked - kattintás esetén az eddig kinagyított kép eltűnik, illetve az értékét is visszaállítja null-ra
@@ -134,5 +140,9 @@ public class MainController {
             imgShowedOnScreen.setVisible(false);
             imgShowedOnScreen.setImage(null);
         }
+    }
+
+    public void addNewCartoShop(ActionEvent event) {
+        autoAdatKezelo.addAuto("Volkswagen","Golf 3","1997","1450000","src/vw_g3.jpg");
     }
 }

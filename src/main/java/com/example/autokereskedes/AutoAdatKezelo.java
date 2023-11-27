@@ -14,7 +14,7 @@ public class AutoAdatKezelo {
     public ArrayList<Auto> osszesAuto=new ArrayList<>();
     public ArrayList<String[]> sorokAdatai=new ArrayList<>();
     public String filename;
-    public Integer nextIndex=0;
+    int nextIndex=1;
     public Auto kivalasztottAuto;
 
 
@@ -40,7 +40,11 @@ public class AutoAdatKezelo {
 
     //új autó hozzáadása
     public void addAuto(String marka,String modell, String evjarat, String ar,String kep_link){
-        nextIndex++;
+
+        for (int i=0;i<osszesAuto.size();i++){
+            if(nextIndex==osszesAuto.get(i).auto_id)
+                nextIndex++;
+        }
         Auto newAuto=new Auto(nextIndex,marka,modell,Integer.parseInt(evjarat),Integer.parseInt(ar),kep_link);
         osszesAuto.add(newAuto);
 
@@ -59,7 +63,7 @@ public class AutoAdatKezelo {
                 return;
             }else{
                 //Ha ki vannak töltve a mezők
-                pw.println(nextIndex + "," + modell + "," + marka + "," + evjarat + "," + ar);
+                pw.println(nextIndex + "," + marka + "," + modell + "," + evjarat + "," + ar +"," + kep_link);
                 pw.flush();
                 pw.close();
             }
@@ -93,7 +97,6 @@ public class AutoAdatKezelo {
             Auto tempAuto = new Auto (Integer.parseInt(sorokAdatai.get(i)[0]),sorokAdatai.get(i)[1],sorokAdatai.get(i)[2],
                     Integer.parseInt(sorokAdatai.get(i)[3]),Integer.parseInt(sorokAdatai.get(i)[4]),
                     sorokAdatai.get(i)[5]);
-            //add each tweet to the allTweets array
             osszesAuto.add(tempAuto);
         }
     }
