@@ -41,32 +41,32 @@ public class AutoAdatKezelo {
     //új autó hozzáadása
     public void addAuto(String marka,String modell, String evjarat, String ar,String kep_link){
 
-        for (int i=0;i<osszesAuto.size();i++){
-            if(nextIndex<osszesAuto.get(i).auto_id)
-                nextIndex=osszesAuto.get(i).auto_id+1;
+        if (!osszesAuto.isEmpty()) {
+            int lastId = osszesAuto.get(osszesAuto.size() - 1).auto_id;
+            nextIndex = lastId + 1;
         }
-        Auto newAuto=new Auto(nextIndex,marka,modell,Integer.parseInt(evjarat),Integer.parseInt(ar),kep_link);
+
+        Auto newAuto = new Auto(nextIndex, marka, modell, Integer.parseInt(evjarat), Integer.parseInt(ar), kep_link);
         osszesAuto.add(newAuto);
 
-        //új autó hozzáadása a CSV file-hoz
-        try{
-            FileWriter fw  = new FileWriter(filename, true);
+        // új autó hozzáadása a CSV file-hoz
+        try {
+            FileWriter fw = new FileWriter(filename, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
 
-            //Minden mező kitöltésének ellenőrzése
-            if(marka.equals("") || modell.equals("") || evjarat.equals("") || ar.equals("") || kep_link.equals("")) {
-                //Ha az egyik mező üres, Exception dobás
+            // minden mező kitöltésének ellenőrzése
+            if (marka.equals("") || modell.equals("") || evjarat.equals("") || ar.equals("") || kep_link.equals("")) {
+                // ha az egyik mező üres, Exception dobás
                 System.out.println("Error: Fill all fields");
-                pw.flush();
-                pw.close();
-            }else{
-                //Ha ki vannak töltve a mezők
-                pw.println(nextIndex + "," + marka + "," + modell + "," + evjarat + "," + ar +"," + kep_link);
-                pw.flush();
-                pw.close();
+            } else {
+                // ha ki vannak töltve a mezők
+                pw.println(nextIndex + "," + marka + "," + modell + "," + evjarat + "," + ar + "," + kep_link);
             }
-        }catch(Exception e){
+
+            pw.flush();
+            pw.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

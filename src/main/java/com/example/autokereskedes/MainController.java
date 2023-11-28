@@ -56,15 +56,19 @@ public class MainController {
         Pane pane = new Pane();
         pane.setPrefHeight(240);
         pane.setPrefWidth(200);
-        if (index % 6 == 0) {
-            pane.setLayoutY(yElozoElhelyez*240+yEltolas);
-            pane.setLayoutX(60); // Az első Pane 60 pixelre legyen a képernyőtől jobbra
-        }else{
+
+        if(index==0){
             pane.setLayoutY(60);
-            pane.setLayoutX(60 + index * 220); // Az eltolás beállítása a jobbra toláshoz
-        }
-        if(index%5==0 && index!=0){
+        }else if(index % 6 == 0) {
             yElozoElhelyez++;
+        }
+
+        pane.setLayoutY(yElozoElhelyez * 240 + yEltolas);
+
+        if (index % 6 == 0) {
+            pane.setLayoutX(60);
+        } else {
+            pane.setLayoutX(60 + (index % 6) * 220);
         }
         //ImageView létrehozása - image hozzáadás
         ImageView imageView = new ImageView();
