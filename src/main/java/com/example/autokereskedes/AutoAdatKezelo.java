@@ -60,7 +60,6 @@ public class AutoAdatKezelo {
                 System.out.println("Error: Fill all fields");
                 pw.flush();
                 pw.close();
-                return;
             }else{
                 //Ha ki vannak töltve a mezők
                 pw.println(nextIndex + "," + marka + "," + modell + "," + evjarat + "," + ar +"," + kep_link);
