@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -26,31 +27,17 @@ import java.util.List;
 
 public class MainController {
     public Main application;
-    public Pane pane1;
-    public ImageView img1;
-    public Button sell1;
-    public TextField text1;
-    public Button lerazas1;
-    public ImageView img2;
-    public Button sell2;
-    public Button lerazas2;
     public ImageView imgShowedOnScreen;
     public AnchorPane anchorPane;
-    public Label label1;
-    public Label label2;
-    public ImageView img3;
-    public Button sell3;
-    public Button lerazas3;
-    public Label label3;
-    public static int ID=0;
     public Button addCartoShopBTN;
 
+    public int yEltolas=60;
+    public int yElozoElhelyez=0;
     AutoAdatKezelo autoAdatKezelo = new AutoAdatKezelo();
     List<Auto> osszesAuto = autoAdatKezelo.osszesAuto;
 
     //Main-nek való átadáshoz
     public void initalize(){
-
         autoKezelo();
         addCartoShopBTN.setOnAction(this::addNewCartoShop);
     }
@@ -69,12 +56,16 @@ public class MainController {
         Pane pane = new Pane();
         pane.setPrefHeight(240);
         pane.setPrefWidth(200);
-        if (index == 0) {
+        if (index % 6 == 0) {
+            pane.setLayoutY(yElozoElhelyez*240+yEltolas);
             pane.setLayoutX(60); // Az első Pane 60 pixelre legyen a képernyőtől jobbra
-        }else {
+        }else{
+            pane.setLayoutY(60);
             pane.setLayoutX(60 + index * 220); // Az eltolás beállítása a jobbra toláshoz
         }
-
+        if(index%5==0 && index!=0){
+            yElozoElhelyez++;
+        }
         //ImageView létrehozása - image hozzáadás
         ImageView imageView = new ImageView();
         imageView.setId("img"+index);
@@ -98,6 +89,7 @@ public class MainController {
         sellButton.setLayoutY(201);
         // Egyedi fx:id beállítása
         sellButton.setId("sell" + index);
+        sellButton.setOnAction(this::sellCar);
         pane.getChildren().add(sellButton);
 
         //Leárazás gomb létrehozása - id beállítása
@@ -128,6 +120,20 @@ public class MainController {
         return pane;
     }
 
+    //autó eladásához gomb -értékesítés
+    public void sellCar(ActionEvent event) {
+        try {
+            Button sellButton = (Button) event.getSource();
+            String idPRE = sellButton.getId();
+            int id = Integer.parseInt(idPRE.substring(4));
+
+            autoAdatKezelo.removeAuto(id);
+            application.Refresh();
+        } catch (Exception e) {
+            e.printStackTrace(); // Hiba kiírása a konzolra
+        }
+    }
+
 
     //Mouse moved - a kurzor képre vitel esetén megjelenik a kép nyagyított változat, kép nézegetőhöz
     public void showImageOnScreen(MouseEvent mouseEvent){
@@ -145,13 +151,15 @@ public class MainController {
     }
 
     public void addNewCartoShop(ActionEvent event) {
-        addCartoShopBTN.setDisable(true);
         application.Hide();
+        addCartoShopBTN.setDisable(true);
         try {
             SecondApp secondApp = new SecondApp();
             secondApp.start(new Stage());
-        } catch (Exception ignored) {}
-        application.Show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        application.Refresh();
         addCartoShopBTN.setDisable(false);
     }
 }

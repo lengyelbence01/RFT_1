@@ -7,27 +7,20 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class SecondApp extends Application {
+    public Stage stage;
     public void start(Stage stage) throws Exception{
+        this.stage=stage;
         FXMLLoader fxmlLoader=new FXMLLoader(SecondApp.class.getResource("autohozzaadas-view.fxml"));
         Scene scene=new Scene(fxmlLoader.load());
+        SecondAppController secondAppController=fxmlLoader.getController();
+        secondAppController.secondApp=this;
         stage.setTitle("Új autó hozzáadása az autókereskedéshez");
         stage.setScene(scene);
         stage.setWidth(730);
         stage.setHeight(400);
         stage.showAndWait();
-
-        setValues(fxmlLoader.getController());
     }
-    public void setValues(SecondAppController secondAppController){
-        labelMarka=secondAppController.labelMarka.getText();
-        labelModell=secondAppController.labelModell.getText();
-        labelEvjarat=secondAppController.labelEvjarat.getText();
-        labelAr=secondAppController.labelAr.getText();
-        labelKepLink=secondAppController.labelKepLink.getText();
+    public void Close() {
+        stage.close();
     }
-    public String labelMarka;
-    public String labelModell;
-    public String labelEvjarat;
-    public String labelAr;
-    public String labelKepLink;
 }

@@ -16,6 +16,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("autokereskedes-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         MainController controller=fxmlLoader.getController();
+        controller.application=this;
         controller.initalize();
         //teljes képernyős window
         stage.setMaximized(true);
@@ -34,5 +35,12 @@ public class Main extends Application {
     public void Hide() {
         stage.hide();
     }
-
+    public void Refresh(){
+        try {
+            stage.close();
+            start(stage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

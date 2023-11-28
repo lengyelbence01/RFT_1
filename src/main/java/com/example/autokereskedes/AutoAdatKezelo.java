@@ -42,8 +42,8 @@ public class AutoAdatKezelo {
     public void addAuto(String marka,String modell, String evjarat, String ar,String kep_link){
 
         for (int i=0;i<osszesAuto.size();i++){
-            if(nextIndex==osszesAuto.get(i).auto_id)
-                nextIndex++;
+            if(nextIndex<osszesAuto.get(i).auto_id)
+                nextIndex=osszesAuto.get(i).auto_id+1;
         }
         Auto newAuto=new Auto(nextIndex,marka,modell,Integer.parseInt(evjarat),Integer.parseInt(ar),kep_link);
         osszesAuto.add(newAuto);
@@ -70,8 +70,34 @@ public class AutoAdatKezelo {
             e.printStackTrace();
         }
     }
+    //Autó eltévolítása
+    public void removeAuto(int index) {
+        if (index >= 0 && index < osszesAuto.size()) {
+            osszesAuto.remove(index);
+            try {
+                FileWriter fw = new FileWriter(filename);
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter pw = new PrintWriter(bw);
 
-        //CONSTRUKTOR
+                // Újraírjuk az első sort
+                pw.println("auto_id,marka,modell,evjarat,ar,kep");
+
+                // Újraírjuk a többi adatot
+                for (int i = 0; i < osszesAuto.size(); i++) {
+                    pw.println(osszesAuto.get(i).auto_id + "," + osszesAuto.get(i).marka +
+                            "," + osszesAuto.get(i).modell + "," + osszesAuto.get(i).evjarat + "," +
+                            osszesAuto.get(i).ar + "," + osszesAuto.get(i).kep_link);
+                }
+
+                pw.flush();
+                pw.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //CONSTRUKTOR
     public AutoAdatKezelo(){
         filename="src/main/resources/autok.csv";
         File file=new File(filename);
