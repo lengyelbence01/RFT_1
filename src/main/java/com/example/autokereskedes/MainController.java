@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainController {
+    public Main application;
     public Pane pane1;
     public ImageView img1;
     public Button sell1;
@@ -143,6 +145,13 @@ public class MainController {
     }
 
     public void addNewCartoShop(ActionEvent event) {
-        autoAdatKezelo.addAuto("Volkswagen","Golf 3","1997","1450000","src/vw_g3.jpg");
+        addCartoShopBTN.setDisable(true);
+        application.Hide();
+        try {
+            SecondApp secondApp = new SecondApp();
+            secondApp.start(new Stage());
+        } catch (Exception ignored) {}
+        application.Show();
+        addCartoShopBTN.setDisable(false);
     }
 }

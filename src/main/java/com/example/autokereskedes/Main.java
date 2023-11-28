@@ -8,8 +8,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
+
+    Stage stage;
     @Override
     public void start(Stage stage) throws IOException {
+        this.stage=stage;
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("autokereskedes-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         MainController controller=fxmlLoader.getController();
@@ -24,4 +27,12 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    public void Show() {
+        stage.show();
+    }
+    public void Hide() {
+        stage.hide();
+    }
+
 }
