@@ -28,7 +28,7 @@ public class AutoAdatKezelo {
                 return osszesAuto.get(i);
             }
         }
-        System.out.println("userDatabaseHandler.getUserByUID() ERROR! No User found");
+        System.out.println("Adatbázis hiba!");
         return osszesAuto.get(0);
     }
 
@@ -55,7 +55,7 @@ public class AutoAdatKezelo {
             PrintWriter pw = new PrintWriter(bw);
 
             //Minden mező kitöltésének ellenőrzése
-            if(marka.equals("") || modell.equals("") || evjarat.equals("") || ar.equals("")) {
+            if(marka.equals("") || modell.equals("") || evjarat.equals("") || ar.equals("") || kep_link.equals("")) {
                 //Ha az egyik mező üres, Exception dobás
                 System.out.println("Error: Fill all fields");
                 pw.flush();
