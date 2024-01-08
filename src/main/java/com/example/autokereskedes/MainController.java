@@ -33,6 +33,7 @@ public class MainController {
 
     public int yEltolas=60;
     public int yElozoElhelyez=0;
+    public Label osszesar;
     AutoAdatKezelo autoAdatKezelo = new AutoAdatKezelo();
     List<Auto> osszesAuto = autoAdatKezelo.osszesAuto;
 
@@ -40,6 +41,7 @@ public class MainController {
     public void initalize(){
         autoKezelo();
         addCartoShopBTN.setOnAction(this::addNewCartoShop);
+        sumAllCarPrices();
     }
 
 
@@ -95,15 +97,6 @@ public class MainController {
         sellButton.setId("sell" + index);
         sellButton.setOnAction(this::sellCar);
         pane.getChildren().add(sellButton);
-
-        //Leárazás gomb létrehozása - id beállítása
-        Button lerazasButton = new Button("Leárazás");
-        lerazasButton.setLayoutX(14);
-        lerazasButton.setLayoutY(201);
-        //
-        lerazasButton.setId("lerazas" + index);
-        pane.getChildren().add(lerazasButton);
-
 
         //Label létrehozása
         Label label = new Label();
@@ -165,5 +158,12 @@ public class MainController {
         }
         application.Refresh();
         addCartoShopBTN.setDisable(false);
+    }
+    public Integer sum=0;
+    public void sumAllCarPrices(){
+        for (int i=0;i<osszesAuto.size();i++){
+            sum+= osszesAuto.get(i).ar;
+        }
+        osszesar.setText("Összes autó értéke: "+sum.toString() + "Ft");
     }
 }
